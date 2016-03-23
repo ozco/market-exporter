@@ -557,13 +557,34 @@ class Market_Exporter_Admin {
 	 */
 	public function get_images( $id, $count ) {
 		global $wpdb;
-		return $wpdb->get_col(
+		// Получаем основное изображение
+		$thumb_guid = $wpdb->get_col(
 									"SELECT guid
 									 FROM $wpdb->posts
-									 WHERE post_parent = $id
-									 		AND ( post_mime_type = 'image/png' OR post_mime_type = 'image/jpeg' )
-									 ORDER BY ID ASC
-									 LIMIT $count" );
+									 WHERE id = (
+										SELECT meta_value
+										FROM $wpdb->postmeta
+										WHERE post_id = $id
+												AND meta_key = '_thumbnail_id' 
+												)
+									 AND ( post_mime_type = 'image/png' OR post_mime_type = 'image/jpeg' ) " );
+		// Дополнительные в галерее
+		$pics = $wpdb->get_col(
+									"SELECT meta_value
+									 FROM $wpdb->postmeta 
+									 WHERE post_id = $id
+									 		AND meta_key = '_product_image_gallery' " );
+									 
+		$ids = implode(",", $pics);
+		
+		$pics_guid = $wpdb->get_col(		
+									"SELECT guid
+									 FROM $wpdb->posts
+									 WHERE id IN ($ids)
+									 		AND ( post_mime_type = 'image/png' OR post_mime_type = 'image/jpeg' ) " );
+									 
+		// Склеиваем
+		return array_merge($thumb_guid, $pics_guid);
 	}
 	
 	/**
