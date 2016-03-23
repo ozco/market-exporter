@@ -586,7 +586,7 @@ class Market_Exporter_Admin {
                  FROM $wpdb->postmeta AS pm
                  INNER JOIN $wpdb->posts AS p ON pm.meta_value=p.ID
                  WHERE pm.post_id = $id
-                      AND pm.meta_key = '_thumbnail_id'
+                      AND pm.meta_key = '_thumbnail_id'					//// Здесь только одно значение
                  ORDER BY p.post_date DESC LIMIT $count" );
 	}
 
