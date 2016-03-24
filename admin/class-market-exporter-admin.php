@@ -645,7 +645,7 @@ class Market_Exporter_Admin {
 
 		$yml = '<?xml version="1.0" encoding="' . get_bloginfo( "charset" ) . '"?>' . PHP_EOL;
 		$yml .= '<!DOCTYPE yml_catalog SYSTEM "shops.dtd">' . PHP_EOL;
-		$yml .= '<yml_catalog date="' . date( "Y-m-d H:i" ) . '">' . PHP_EOL;
+		$yml .= '<yml_catalog date="' . current_time( "Y-m-d H:i" ) . '">' . PHP_EOL;  // Date выводит неверное время (+0 по Гринвичу). current_time функция wordpress, берет поправку из настроек.
 		$yml .= '  <shop>' . PHP_EOL;
 		$yml .= '    <name>' . esc_html( $shop_settings['website_name'] ) . '</name>' . PHP_EOL;
 		$yml .= '    <company>' . esc_html( $shop_settings['company_name'] ) . '</company>' . PHP_EOL;
