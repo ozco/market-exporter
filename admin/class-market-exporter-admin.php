@@ -667,7 +667,10 @@ class Market_Exporter_Admin {
 			}
 		endforeach;
 		$yml .= '    </categories>' . PHP_EOL;
-		$yml .= '    <local_delivery_cost>' . $this->get_delivery() . '</local_delivery_cost>' . PHP_EOL;
+		//$yml .= '    <local_delivery_cost>' . $this->get_delivery() . '</local_delivery_cost>' . PHP_EOL;
+		$yml .= '    <delivery-options>'.PHP_EOL;
+		$yml .= '    	<option cost="' . $this->get_delivery() . '" days="1-3" order-before="17"/>'.PHP_EOL;	// Еще 2 полезных атрибута
+		$yml .= '    </delivery-options>'.PHP_EOL;
 		$yml .= '    <offers>' . PHP_EOL;
 		foreach ( $ya_offers as $offer ):
 			/*
